@@ -14,6 +14,10 @@ class CompaniesController extends Controller
     public function index()
     {
         //
+            /* $table->string('name'); */
+            /* $table->string('email')->nullable(); */
+            /* $table->string('logo')->nullable(); */
+            /* $table->string('website')->nullable(); */
     }
 
     /**

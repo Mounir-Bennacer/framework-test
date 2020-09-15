@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Companies;
+use App\Employees;
 
 class EmployeesController extends Controller
 {
@@ -14,9 +14,13 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $companies = Companies::all();
-        /* return view('companies.index', compact('companies')); */
-        return 'hello';
+        $employees = Employees::all();
+        return view('employees.index', compact('employees'));
+        /* $table->string('first_name'); */
+        /* $table->string('last_name'); */
+        /* $table->string('email')->nullable(); */
+        /* $table->string('phone')->nullable(); */
+        /* $table->foreign('id')->references('id')->on('companies'); */
     }
 
     /**
