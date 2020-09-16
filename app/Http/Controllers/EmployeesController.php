@@ -41,16 +41,17 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        dd($request->companies_id);
         $validateEmployeeData = $request->validate([
-            'first_name' => 'required|string|max:25',
-            'last_name' => 'required|string|max:32',
-            'email' => 'string|email|unique:user',
-            'phone' => 'numeric|min:8|max:12',
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
+            'email' => 'string|email|unique:employees',
+            'phone' => 'numeric',
             'companies_id' => 'required'
         ]);
-dd($validateEmployeeData);
-        return response()->json('Form successfully validated and saved');
+        Employees::create($validateEmployeeData);
+        return redirect('employees');
+        /* return response()->json('Form successfully validated and saved'); */
     }
 
     /**
@@ -90,10 +91,10 @@ dd($validateEmployeeData);
         dd($request);
         $employee = Employees::find($id);
         $validateEmployeeData = $request->validate([
-            'first_name' => 'required|string|max:25',
-            'last_name' => 'required|string|max:32',
-            'email' => 'string|email|unique:user',
-            'phone' => 'numeric|min:8|max:12',
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
+            'email' => 'string|email|unique:employees',
+            'phone' => 'numeric',
             'companies_id' => 'required'
         ]);
 
@@ -112,5 +113,11 @@ dd($validateEmployeeData);
         $employee->delete();
         return redirect('employees');
 
+    }
+
+    public function isSelection($id)
+    {
+        $company = \App\Companies::find($id);
+        return $company->id == $this->Employees()->companies_id ? 'selected' : '';
     }
 }

@@ -36,7 +36,7 @@ class CompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $newCompany = $request->validate([
             'name' => 'required|string|max:25',
             'email' => 'required|string|email|unique:user',
             'logo' => 'required|mimes:jpg,png|max:2048',
@@ -56,6 +56,8 @@ class CompaniesController extends Controller
             ->with('success','File has been uploaded.')
             ->with('file', $fileName);
         }
+
+        Companies::create($newCompany);
     }
 
     /**
