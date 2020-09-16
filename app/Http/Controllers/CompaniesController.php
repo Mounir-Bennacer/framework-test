@@ -53,11 +53,12 @@ class CompaniesController extends Controller
                 Companies::create(['logo' => $url]);
             }
         }
-        /* $this->storeLogo($request); */
 
         $company = new Companies;
+
         $company->name = $request->input('name');
         $company->email = $request->input('email');
+        $company->logo = $url;
         $company->website = $request->input('website');
 
         $company->save();
@@ -98,21 +99,19 @@ class CompaniesController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request);
         $request->validate([
             'name' => 'required|string|max:25',
-            'email' => 'required|string|email|unique:user',
-            'logo' => 'required|mimes:jpg,png|max:2048',
-            'website' => 'required'
+            'email' => 'required|string|email',
+            'logo' => 'required|mimes:jpeg,jpg,png|max:2048',
         ]);
         $companyModel = new Companies;
 
         if($request->file()) {
             $fileName = time().'_'.$request->logo->getClientOriginalName();
-            $filePath = $request->file('logoUpload')->storeAs('uploads', $fileName, 'public');
+            $filePath = $request->logo->storeAs('uploads', $fileName, 'public');
 
-            $companyModel->name = time().'_'.$request->file->getClientOriginalName();
-            $companyModel->file_path = '/storage/' . $filePath;
+            $companyModel->name = time().'_'.$request->logo->getClientOriginalName();
+            $companyModel->logo = '/storage/' . $filePath;
             $companyModel->save();
 
             return back()
@@ -132,9 +131,5 @@ class CompaniesController extends Controller
         $company = Companies::findOrFail($id);
         $company->delete();
         return redirect('companies');
-    }
-
-    public function storeLogo(Request $request)
-    {
     }
 }

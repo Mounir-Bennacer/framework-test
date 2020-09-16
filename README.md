@@ -7,7 +7,7 @@
 -   [x] Basic Laravel Auth with the ability to log in as an administrator
 -   [x] Use database seeds to create first user with email admin@admin.com and password “password”
 -   [x] Free to Use laravel/ui composer package and free to use bootstrap and auth scaffolding to speed up created auth routes
--   [ ] CRUD functionality (Create / Read / Update / Delete) for two menu items in header or left menu: Companies and Employees.
+-   [x] CRUD functionality (Create / Read / Update / Delete) for two menu items in header or left menu: Companies and Employees.
 -   [x] Companies DB table consists of these fields: Name (required), email, logo (minimum 100×100), website
 -   [x] Employees DB table consists of these fields: First name (required), last name (required), company_id (foreign key to Companies), email, phone
 -   [x] Use database migrations to create those schemas above
