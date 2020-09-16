@@ -3,6 +3,9 @@
 @section('content')
 
 <div class="container">
+<span class="lead">
+<a href="{{ url('employees/create') }}" class="badge badge-primary">Add new employee</a>
+</span>
     <table class="table">
       <thead class="thead-dark">
         <tr>
@@ -17,15 +20,16 @@
       <tbody>
         @foreach($employees as $employee)
         <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>12122202</td>
-          <td>@Apple</td>
+          <th scope="row">{{$employee->id}}</th>
+          <td>{{ $employee->first_name }}</td>
+          <td>{{ $employee->last_name }}</td>
+          <td>{{ $employee->email }}</td>
+          <td>{{ $employee->phone }}</td>
+          <td>{{ $employee->companies->name }}</td>
         </tr>
         @endforeach
       </tbody>
     </table>
+{{ $employees->links() }}
 </div>
 @endsection

@@ -15,7 +15,7 @@
 [x] Use basic Laravel resource controllers with default methods – index, create, store, destroy etc.
 [x] Laravel models have fillable to match DB schema
 [] Use Laravel’s validation function or Form Request classes for validating data
-[] Use Laravel’s pagination for showing Companies/Employees list, 5 entries per page
+[x] Use Laravel’s pagination for showing Companies/Employees list, 5 entries per page
 
 ---
 

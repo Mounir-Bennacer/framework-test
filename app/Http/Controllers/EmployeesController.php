@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Employees;
+use App\Companies;
+use Illuminate\Support\Facades\DB;
 
 class EmployeesController extends Controller
 {
@@ -14,7 +16,9 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees = Employees::all();
+        // we fetch all employees with the company associated
+        // and paginate 5 results per page
+        $employees = Employees::with('companies')->paginate(5);
         return view('employees.index', compact('employees'));
     }
 
@@ -25,7 +29,9 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        //
+        // we fetch unique companies and inject that data to the dropdown menu
+        $companies = DB::table('companies')->select('id','name')->groupBy('name')->orderBy('created_at','DESC')->get();
+        return view('employees.create',compact('companies'));
     }
 
     /**
@@ -36,7 +42,16 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'first_name' => 'required|min:3',
+            'last_name' => 'required|min:3',
+            'email' => 'unique:App\User,email',
+            'phone' => 'unique:App\Employees,phone',
+        ]);
+
+        Employees::create($request);
+
+        return redirect('/');
     }
 
     /**
