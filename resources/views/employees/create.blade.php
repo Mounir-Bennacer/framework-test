@@ -8,7 +8,7 @@
     @csrf
       <div class="form-group">
         <label for="firstname">Firstname</label>
-        <input type="text" class="form-control" id="first_name" name="firstname" placeholder="firstname" required>
+        <input type="text" class="form-control" id="firstname" name="firstname" placeholder="firstname" required>
       </div>
       <div class="form-group">
         <label for="lastname">Lastname</label>
@@ -24,9 +24,9 @@
       </div>
       <div class="form-group">
         <label for="company">Select the company</label>
-        <select class="form-control" id="company" >
+        <select class="form-control" id="company" name="companies_id">
             @foreach($companies as $company)
-          <option value="{{ $company->id }}" name="companies_id">{{ $company->name }}</option>
+          <option value="{{ $company->id }}" >{{ $company->name }}</option>
             @endforeach
         </select>
       </div>

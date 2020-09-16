@@ -45,21 +45,20 @@ class CompaniesController extends Controller
         ]);
 
         if ($request->hasFile('logoUpload')) {
-            //  Let's do everything here
+
             if ($request->file('logoUpload')->isValid()) {
                 $extension = $request->logoUpload->extension();
                 $request->logoUpload->storeAs('/storage/app/public', $validatedImage['name'].".".$extension);
                 $url = Storage::url($validatedImage['name'].".".$extension);
-                Companies::create(['logo' => $url,]);
+                Companies::create(['logo' => $url]);
             }
         }
         /* $this->storeLogo($request); */
 
         $company = new Companies;
-        $company->name = $request->get('name');
-        $company->email = $request->get('email');
-        /* $company->logo = $request->get('logo'); */
-        $company->website = $request->get('website');
+        $company->name = $request->input('name');
+        $company->email = $request->input('email');
+        $company->website = $request->input('website');
 
         $company->save();
 

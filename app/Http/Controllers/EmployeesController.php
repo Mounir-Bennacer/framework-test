@@ -41,16 +41,21 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->companies_id);
-        $validateEmployeeData = $request->validate([
+        $request->validate([
             'firstname' => 'required|string',
             'lastname' => 'required|string',
             'email' => 'string|email',
-            'phone' => 'numeric',
-            'companies_id' => 'required'
+            'phone' => 'string',
         ]);
-        Employees::create($validateEmployeeData);
-        return redirect('employees');
+        $employee = new Employees();
+        $employee->first_name = $request->input('firstname');
+        $employee->last_name = $request->input('lastname');
+        $employee->email = $request->input('email');
+        $employee->phone = $request->input('phone');
+        $employee->companies_id = $request->input('companies_id');
+        $employee->save();
+
+        return redirect('employees')->with('success', 'Employee Added');
     }
 
     /**
@@ -91,17 +96,16 @@ class EmployeesController extends Controller
             'firstname' => 'required|string',
             'lastname' => 'required|string',
             'email' => 'string|email',
-            'phone' => 'numeric',
-            'companies_id' => 'required'
+            'phone' => 'string',
         ]);
 
 
         $employee = Employees::find($id);
-        $employee->first_name = $request->get('firstname');
-        $employee->last_name = $request->get('lastname');
-        $employee->email = $request->get('email');
-        $employee->phone = $request->get('phone');
-        $employee->companies_id = $request->get('companies_id');
+        $employee->first_name = $request->input('firstname');
+        $employee->last_name = $request->input('lastname');
+        $employee->email = $request->input('email');
+        $employee->phone = $request->input('phone');
+        $employee->companies_id = $request->input('companies_id');
         $employee->save();
 
         return redirect('employees')->with('success', 'Employee Added');
@@ -119,11 +123,5 @@ class EmployeesController extends Controller
         $employee->delete();
         return redirect('employees');
 
-    }
-
-    public function isSelection($id)
-    {
-        $company = \App\Companies::find($id);
-        return $company->id == $this->Employees()->companies_id ? 'selected' : '';
     }
 }
