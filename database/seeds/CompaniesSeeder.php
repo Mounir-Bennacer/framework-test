@@ -12,6 +12,9 @@ class CompaniesSeeder extends Seeder
      */
     public function run()
     {
-        factory(Companies::class, 100);
+        // creating 100 companies
+        factory(Companies::class, 100)->create()->each(function($c){
+            $c->save();
+        });
     }
 }

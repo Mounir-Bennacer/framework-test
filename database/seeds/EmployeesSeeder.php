@@ -12,6 +12,9 @@ class EmployeesSeeder extends Seeder
      */
     public function run()
     {
-        factory(Employees::class, 100);
+        // creating 10 employees
+        factory(Employees::class, 100)->create()->each(function($e){
+            $e->save();
+        });
     }
 }

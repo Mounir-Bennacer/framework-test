@@ -16,11 +16,6 @@ class EmployeesController extends Controller
     {
         $employees = Employees::all();
         return view('employees.index', compact('employees'));
-        /* $table->string('first_name'); */
-        /* $table->string('last_name'); */
-        /* $table->string('email')->nullable(); */
-        /* $table->string('phone')->nullable(); */
-        /* $table->foreign('id')->references('id')->on('companies'); */
     }
 
     /**

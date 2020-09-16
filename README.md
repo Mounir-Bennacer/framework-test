@@ -16,3 +16,14 @@
 [x] Laravel models have fillable to match DB schema
 [] Use Laravel’s validation function or Form Request classes for validating data
 [] Use Laravel’s pagination for showing Companies/Employees list, 5 entries per page
+
+---
+
+### Commands to run the project
+
+```bash
+-   php artisan migrate
+-   php artisan db:seed
+```
+
+-   Login using admin@admin.com & password: password or register new user
