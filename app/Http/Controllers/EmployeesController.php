@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Employees;
-use App\Companies;
 use Illuminate\Support\Facades\DB;
 
 class EmployeesController extends Controller
@@ -30,7 +29,7 @@ class EmployeesController extends Controller
     public function create()
     {
         // we fetch unique companies and inject that data to the dropdown menu
-        $companies = DB::table('companies')->select('id','name')->groupBy('name')->orderBy('created_at','DESC')->get();
+        $companies = DB::table('companies')->select('id','name')->groupBy('name')->get();
         return view('employees.create',compact('companies'));
     }
 
@@ -42,16 +41,15 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'first_name' => 'required|min:3',
-            'last_name' => 'required|min:3',
-            'email' => 'unique:App\User,email',
-            'phone' => 'unique:App\Employees,phone',
+        $validateEmployeeData = $request->validate([
+            'first_name' => 'required|string|max:25',
+            'last_name' => 'required|string|max:32',
+            'email' => 'string|email|unique:user',
+            'phone' => 'numeric|min:8|max:12',
+            'companies_id' => 'required'
         ]);
-
-        Employees::create($request);
-
-        return redirect('/');
+dd($validateEmployeeData);
+        return response()->json('Form successfully validated and saved');
     }
 
     /**
@@ -62,7 +60,7 @@ class EmployeesController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -73,7 +71,9 @@ class EmployeesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee = Employees::find($id);
+        $companies = DB::table('companies')->select('id','name')->groupBy('name')->get();
+        return view('employees.edit', compact('employee', 'companies', 'id'));
     }
 
     /**
@@ -85,7 +85,16 @@ class EmployeesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $employee = Employees::find($id);
+        $validateEmployeeData = $request->validate([
+            'first_name' => 'required|string|max:25',
+            'last_name' => 'required|string|max:32',
+            'email' => 'string|email|unique:user',
+            'phone' => 'numeric|min:8|max:12',
+            'companies_id' => 'required'
+        ]);
+
+        return response('bravo');
     }
 
     /**
