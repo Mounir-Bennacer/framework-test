@@ -14,10 +14,15 @@
 -   [ ] Store company logos in storage/app/public folder and make them accessible from public
 -   [x] Use basic Laravel resource controllers with default methods – index, create, store, destroy etc.
 -   [x] Laravel models have fillable to match DB schema
--   [ ] Use Laravel’s validation function or Form Request classes for validating data
+-   [x] Use Laravel’s validation function or Form Request classes for validating data
 -   [x] Use Laravel’s pagination for showing Companies/Employees list, 5 entries per page
 
 ---
+
+TODO:
+
+-   Store the images into storage/app/public folder and make them accessible from public
+-   finish the CRUD
 
 ### Commands to run the project
 

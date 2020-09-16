@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Companies;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CompaniesController extends Controller
 {
@@ -36,28 +37,33 @@ class CompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        $newCompany = $request->validate([
-            'name' => 'required|string|max:25',
-            'email' => 'required|string|email|unique:user',
-            'logo' => 'required|mimes:jpg,png|max:2048',
+        $validatedImage = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email',
+            'logo' => 'mimes:jpeg,jpg,png|max:2048',
             'website' => 'required'
         ]);
-        $companyModel = new Companies;
 
-        if($request->file()) {
-            $fileName = time().'_'.$request->file->getClientOriginalName();
-            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
-
-            $companyModel->name = time().'_'.$request->file->getClientOriginalName();
-            $companyModel->file_path = '/storage/' . $filePath;
-            $companyModel->save();
-
-            return back()
-            ->with('success','File has been uploaded.')
-            ->with('file', $fileName);
+        if ($request->hasFile('logoUpload')) {
+            //  Let's do everything here
+            if ($request->file('logoUpload')->isValid()) {
+                $extension = $request->logoUpload->extension();
+                $request->logoUpload->storeAs('/storage/app/public', $validatedImage['name'].".".$extension);
+                $url = Storage::url($validatedImage['name'].".".$extension);
+                Companies::create(['logo' => $url,]);
+            }
         }
+        /* $this->storeLogo($request); */
 
-        Companies::create($newCompany);
+        $company = new Companies;
+        $company->name = $request->get('name');
+        $company->email = $request->get('email');
+        /* $company->logo = $request->get('logo'); */
+        $company->website = $request->get('website');
+
+        $company->save();
+
+        return redirect('companies')->with('success','Company added successfully');
     }
 
     /**
@@ -103,8 +109,8 @@ class CompaniesController extends Controller
         $companyModel = new Companies;
 
         if($request->file()) {
-            $fileName = time().'_'.$request->file->getClientOriginalName();
-            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+            $fileName = time().'_'.$request->logo->getClientOriginalName();
+            $filePath = $request->file('logoUpload')->storeAs('uploads', $fileName, 'public');
 
             $companyModel->name = time().'_'.$request->file->getClientOriginalName();
             $companyModel->file_path = '/storage/' . $filePath;
@@ -127,5 +133,9 @@ class CompaniesController extends Controller
         $company = Companies::findOrFail($id);
         $company->delete();
         return redirect('companies');
+    }
+
+    public function storeLogo(Request $request)
+    {
     }
 }

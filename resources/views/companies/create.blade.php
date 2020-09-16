@@ -4,7 +4,7 @@
 @section('content')
 
 <div class="container">
-    <form action="{{ route('companies.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('companies.store') }}" method="post" enctype="multipart/form-data" name="company">
     @csrf
       <div class="form-group">
         <label for="name">Name</label>
@@ -20,7 +20,7 @@
       </div>
       <div class="form-group">
         <label for="logo">Please upload a logo</label>
-        <input type="file" class="form-control-file" id="logo" name="logo">
+        <input type="file" class="form-control-file" id="logo" name="logoUpload">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

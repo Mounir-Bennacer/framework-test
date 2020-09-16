@@ -45,13 +45,12 @@ class EmployeesController extends Controller
         $validateEmployeeData = $request->validate([
             'firstname' => 'required|string',
             'lastname' => 'required|string',
-            'email' => 'string|email|unique:employees',
+            'email' => 'string|email',
             'phone' => 'numeric',
             'companies_id' => 'required'
         ]);
         Employees::create($validateEmployeeData);
         return redirect('employees');
-        /* return response()->json('Form successfully validated and saved'); */
     }
 
     /**
@@ -88,17 +87,24 @@ class EmployeesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
-        $employee = Employees::find($id);
-        $validateEmployeeData = $request->validate([
+        $request->validate([
             'firstname' => 'required|string',
             'lastname' => 'required|string',
-            'email' => 'string|email|unique:employees',
+            'email' => 'string|email',
             'phone' => 'numeric',
             'companies_id' => 'required'
         ]);
 
-        return response('bravo');
+
+        $employee = Employees::find($id);
+        $employee->first_name = $request->get('firstname');
+        $employee->last_name = $request->get('lastname');
+        $employee->email = $request->get('email');
+        $employee->phone = $request->get('phone');
+        $employee->companies_id = $request->get('companies_id');
+        $employee->save();
+
+        return redirect('employees')->with('success', 'Employee Added');
     }
 
     /**

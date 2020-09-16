@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-    <form action="{{ url('update') }}" method="post">
+    <form action="{{ url('employees/' . $employee->id) }}" method="post">
     @method('PATCH')
     @csrf
       <div class="form-group">
@@ -24,9 +24,9 @@
       </div>
       <div class="form-group">
         <label for="company">Select the company</label>
-        <select class="form-control" id="company">
+        <select class="form-control" id="company" name="companies_id">
             @foreach($companies as $company)
-          <option value="{{ $company->id }} {{ $company->id == $employee->companies_id ? 'selected' : '' }}" name="companies_id">{{ $company->name }}</option>
+          <option value="{{ $company->id }} {{ $company->id == $employee->companies_id ? 'selected' : '' }}" >{{ $company->name }}</option>
             @endforeach
         </select>
       </div>
