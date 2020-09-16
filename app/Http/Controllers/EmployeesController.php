@@ -106,6 +106,9 @@ dd($validateEmployeeData);
      */
     public function destroy($id)
     {
-        //
+        $employee = Employees::findOrFail($id);
+        $employee->delete();
+        return redirect('employees');
+
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-    <form action="$id/update" method="post">
+    <form action="update" method="post">
     @method('PUT')
     @csrf
       <div class="form-group">
