@@ -15,6 +15,7 @@
           <th scope="col">Email</th>
           <th scope="col">Phone</th>
           <th scope="col">Company</th>
+          <th scope="col">View</th>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>
         </tr>
@@ -28,6 +29,9 @@
           <td>{{ $employee->email }}</td>
           <td>{{ $employee->phone }}</td>
           <td>{{ $employee->companies->name }}</td>
+          <td>
+            <span><a href="employees/{{$employee->id}}">View</a></span>
+          </td>
           <td>
             <span><a href="employees/{{$employee->id}}/edit">Edit</a></span>
           </td>

@@ -60,7 +60,8 @@ dd($validateEmployeeData);
      */
     public function show($id)
     {
-
+        $employee = Employees::find($id);
+        return view('employees.show', compact('employee'));
     }
 
     /**
