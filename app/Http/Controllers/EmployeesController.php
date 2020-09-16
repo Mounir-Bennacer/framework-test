@@ -41,6 +41,7 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $validateEmployeeData = $request->validate([
             'first_name' => 'required|string|max:25',
             'last_name' => 'required|string|max:32',
@@ -86,6 +87,7 @@ dd($validateEmployeeData);
      */
     public function update(Request $request, $id)
     {
+        dd($request);
         $employee = Employees::find($id);
         $validateEmployeeData = $request->validate([
             'first_name' => 'required|string|max:25',

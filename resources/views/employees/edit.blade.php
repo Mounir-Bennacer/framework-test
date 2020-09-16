@@ -3,8 +3,8 @@
 @section('content')
 
 <div class="container">
-    <form action="update" method="post">
-    @method('PUT')
+    <form action="{{ url('update') }}" method="post">
+    @method('PATCH')
     @csrf
       <div class="form-group">
         <label for="firstname">Firstname</label>

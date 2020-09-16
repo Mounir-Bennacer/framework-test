@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Companies;
 use Illuminate\Http\Request;
 
 class CompaniesController extends Controller
@@ -13,11 +14,8 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        //
-            /* $table->string('name'); */
-            /* $table->string('email')->nullable(); */
-            /* $table->string('logo')->nullable(); */
-            /* $table->string('website')->nullable(); */
+        $companies = Companies::paginate(5);
+        return view('companies.index', compact('companies'));
     }
 
     /**
@@ -27,7 +25,7 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        //
+        return view('companies.create');
     }
 
     /**
@@ -38,7 +36,26 @@ class CompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:25',
+            'email' => 'required|string|email|unique:user',
+            'logo' => 'required|mimes:jpg,png|max:2048',
+            'website' => 'required'
+        ]);
+        $companyModel = new Companies;
+
+        if($request->file()) {
+            $fileName = time().'_'.$request->file->getClientOriginalName();
+            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+
+            $companyModel->name = time().'_'.$request->file->getClientOriginalName();
+            $companyModel->file_path = '/storage/' . $filePath;
+            $companyModel->save();
+
+            return back()
+            ->with('success','File has been uploaded.')
+            ->with('file', $fileName);
+        }
     }
 
     /**
@@ -49,7 +66,8 @@ class CompaniesController extends Controller
      */
     public function show($id)
     {
-        //
+        $company = Companies::findOrFail($id);
+        return view('companies.show',compact('company'));
     }
 
     /**
@@ -60,7 +78,8 @@ class CompaniesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $company = Companies::findOrFail($id);
+        return view('companies.edit',compact('company'));
     }
 
     /**
@@ -70,9 +89,29 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        dd($request);
+        $request->validate([
+            'name' => 'required|string|max:25',
+            'email' => 'required|string|email|unique:user',
+            'logo' => 'required|mimes:jpg,png|max:2048',
+            'website' => 'required'
+        ]);
+        $companyModel = new Companies;
+
+        if($request->file()) {
+            $fileName = time().'_'.$request->file->getClientOriginalName();
+            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+
+            $companyModel->name = time().'_'.$request->file->getClientOriginalName();
+            $companyModel->file_path = '/storage/' . $filePath;
+            $companyModel->save();
+
+            return back()
+            ->with('success','File has been uploaded.')
+            ->with('file', $fileName);
+        }
     }
 
     /**
@@ -83,6 +122,8 @@ class CompaniesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $company = Companies::findOrFail($id);
+        $company->delete();
+        return redirect('companies');
     }
 }
