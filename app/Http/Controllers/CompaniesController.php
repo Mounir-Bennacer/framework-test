@@ -98,19 +98,20 @@ class CompaniesController extends Controller
             'logo' => 'required|mimes:jpeg,jpg,png|max:2048',
         ]);
 
-        if($request->file()) {
-            $fileName = time().'_'.$request->logo->getClientOriginalName();
-            $filePath = $request->logo->storeAs('uploads', $fileName, 'public');
+        $logo = $request->file('logo');
 
-            $companyModel = new Companies;
-            $companyModel->name = time().'_'.$request->logo->getClientOriginalName();
-            $companyModel->logo = '/storage/' . $filePath;
-            $companyModel->save();
+        $url = $logo->store('public/logo');
 
-            return back()
-            ->with('success','File has been uploaded.')
-            ->with('file', $fileName);
-        }
+        $company = Companies::findOrFail($request->id);
+        dd($company);
+        $company->name = $request->input('name');
+        $company->email = $request->input('email');
+        $company->logo = $url;
+        $company->website = $request->input('website');
+
+        $company->save();
+
+        return redirect('companies')->with('success','Company added successfully');
     }
 
     /**

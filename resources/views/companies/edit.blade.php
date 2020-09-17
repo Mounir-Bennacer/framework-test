@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-    <form action="{{ url('companies/'. $company->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url('companies/'. $company->id) }}" method="post" enctype="multipart/form-data" name="company">
     @method('PATCH')
     @csrf
       <div class="form-group">
@@ -18,6 +18,11 @@
         <label for="website">Website</label>
         <input type="tel" class="form-control" id="website" name="website" value="{{ $company->website }}">
       </div>
+
+      <div class="form-group">
+        <img src="{{ $company->logo }}" alt="{{ $company->name }}" class="img-thumbnail">
+      </div>
+
       <div class="form-group">
         <label for="logo">Please upload a logo</label>
         <input type="file" class="form-control-file" id="logo" name="logo">
