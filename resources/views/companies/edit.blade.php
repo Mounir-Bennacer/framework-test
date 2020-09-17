@@ -20,11 +20,11 @@
       </div>
 
       <div class="form-group">
-        <img src="{{ $company->logo }}" alt="{{ $company->name }}" class="img-thumbnail">
+        <img src="{{ Storage::disk()->url($company->logo) }}" alt="{{ $company->name }}" class="img-thumb">
       </div>
 
       <div class="form-group">
-        <label for="logo">Please upload a logo</label>
+        <label for="logo">Please upload another logo</label>
         <input type="file" class="form-control-file" id="logo" name="logo">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>

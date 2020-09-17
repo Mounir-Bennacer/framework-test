@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Companies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class CompaniesController extends Controller
 {
@@ -37,6 +38,7 @@ class CompaniesController extends Controller
      */
     public function store(Request $request)
     {
+        // here we validate the name, email, logo and website
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email',
@@ -90,27 +92,42 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
+        $company = Companies::findOrFail($id);
+
         $request->validate([
             'name' => 'required|string|max:25',
             'email' => 'required|string|email',
-            'logo' => 'required|mimes:jpeg,jpg,png|max:2048',
+            'website' => 'required|string|max:255'
         ]);
 
-        $logo = $request->file('logo');
 
-        $url = $logo->store('public/logo');
+        // we check if the logo exist if so we validate it here
+        // and send it to the database
+        if ($request->hasFile('logo')) {
 
-        $company = Companies::findOrFail($request->id);
-        dd($company);
+            if ($request->file('logo')->isValid()) {
+                //
+                $request->validate([
+                    'logo' => 'mimes:jpeg,jpg,png|max:2048',
+                ]);
+
+                $logo = $request->file('logo');
+
+                $url = $logo->store('public/logo');
+                $company->logo = $url;
+            }
+        }
+
+        // from here we save the name, email and website to the database
         $company->name = $request->input('name');
         $company->email = $request->input('email');
-        $company->logo = $url;
         $company->website = $request->input('website');
 
         $company->save();
 
+        // we redirect the user to the main page of companies
         return redirect('companies')->with('success','Company added successfully');
     }
 
