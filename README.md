@@ -1,3 +1,5 @@
+# Creating a CRUD APP
+
 ## About the task
 
 > The objective is to build an application that helps an admin maintain a list of the companies that they have on their records and relate them to any employees that work for them basically creating a mini-CRM.
@@ -11,7 +13,7 @@
 -   [x] Companies DB table consists of these fields: Name (required), email, logo (minimum 100×100), website
 -   [x] Employees DB table consists of these fields: First name (required), last name (required), company_id (foreign key to Companies), email, phone
 -   [x] Use database migrations to create those schemas above
--   [ ] Store company logos in storage/app/public folder and make them accessible from public
+-   [x] Store company logos in storage/app/public folder and make them accessible from public
 -   [x] Use basic Laravel resource controllers with default methods – index, create, store, destroy etc.
 -   [x] Laravel models have fillable to match DB schema
 -   [x] Use Laravel’s validation function or Form Request classes for validating data
@@ -19,10 +21,13 @@
 
 ---
 
-TODO:
+## Improvements:
 
--   Store the images into storage/app/public folder and make them accessible from public
--   finish the CRUD
+> Here i list what i think i could improve on this application:
+
+-   Separate the validation on its own class so the controllers could breath a bit 😅
+-   Separate the input forms on 1 partials so they can be reusable
+-   style this app a bit better
 
 ### Commands to run the project
 
