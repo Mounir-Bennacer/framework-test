@@ -4,6 +4,7 @@
 @section('content')
 
 <div class="container">
+    @if(count($companies) > 0)
     <form action="{{url('employees')}}" method="post">
     @csrf
       <div class="form-group">
@@ -32,7 +33,12 @@
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-
+    @else
+        <div class="form-group">
+            <h1>Please add a company first</h1>
+            <a href="{{ url('companies/create') }}">Add Company</a>
+        </div>
+    @endif
     @include('_partials.errors')
 
 </div>
