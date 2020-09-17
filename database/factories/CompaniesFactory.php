@@ -9,7 +9,8 @@ $factory->define(Companies::class, function (Faker $faker) {
     return [
         'name' => $faker->company,
         'email' => $faker->email,
-        'logo' => 'http://imageipsum.com/100x100',
+        /* 'logo' => $faker->image('/storage/app/public/logos',100,100,null,false), */
+        'logo' => $faker->imageUrl(100,100,'cats',true),
         'website' => $faker->url
     ];
 });
