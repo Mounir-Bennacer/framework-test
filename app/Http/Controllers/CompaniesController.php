@@ -102,7 +102,6 @@ class CompaniesController extends Controller
             'website' => 'required|string|max:255'
         ]);
 
-
         // we check if the logo exist if so we validate it here
         // and send it to the database
         if ($request->hasFile('logo')) {

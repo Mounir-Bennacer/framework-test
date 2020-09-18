@@ -25,6 +25,7 @@
 
 > Here i list what i think i could improve on this application:
 
+-   Refactor code in controllers
 -   Separate the validation on its own class so the controllers could breath a bit 😅
 -   Separate the input forms on 1 partials so they can be reusable
 -   style this app a bit better
@@ -34,6 +35,11 @@
 ```bash
 -   php artisan migrate
 -   php artisan db:seed
+> This will migrate the tables & seed the database with 50 employees and
+> 100 companies. If you want only to seed the admin@admin.com then comment the
+> lines in /database/seeds/DatabaseSeeder.php
+        $this->call(CompaniesSeeder::class);
+        $this->call(EmployeesSeeder::class);
 ```
 
 -   Login using admin@admin.com & password: password or register new user
